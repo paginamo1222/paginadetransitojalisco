@@ -1,7 +1,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Secretaría de Transporte de Jalisco - Pago de Multas</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
@@ -48,6 +50,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .logo {
@@ -57,33 +61,25 @@
         }
         
         .logo img {
-            height: 80px;
+            height: 70px;
         }
         
         .logo-text h1 {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 700;
-        }
-        
-        .logo-text p {
-            font-size: 1rem;
-            opacity: 0.95;
-        }
-        
-        nav {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .nav-menu {
             display: flex;
             list-style: none;
             padding: 0;
+            flex-wrap: wrap;
         }
         
         .nav-menu li {
-            padding: 18px 25px;
+            padding: 18px 20px;
             transition: all 0.3s;
+            white-space: nowrap;
         }
         
         .nav-menu li:hover {
@@ -94,7 +90,7 @@
         .hero {
             background: linear-gradient(rgba(0,103,71,0.85), rgba(0,103,71,0.85)), url('https://picsum.photos/id/1015/1920/400') center/cover;
             color: white;
-            padding: 60px 0;
+            padding: 50px 0;
             text-align: center;
         }
         
@@ -107,34 +103,17 @@
             padding: 0 20px;
         }
         
-        .ticket-panel {
+        .ticket-panel, .payment-section {
             background: white;
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.12);
             padding: 35px;
-        }
-        
-        .ticket-header {
-            background: var(--jalisco-green);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            text-align: center;
         }
         
         .amount {
             font-size: 3.2rem;
             font-weight: 700;
             color: #d32f2f;
-        }
-        
-        .payment-section {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            padding: 35px;
-            height: fit-content;
         }
         
         h2 {
@@ -156,10 +135,10 @@
         
         input, select {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             border: 2px solid #ddd;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 1.05rem;
         }
         
         .card-options {
@@ -202,12 +181,75 @@
             background: #004d33;
             transform: translateY(-3px);
         }
-        
-        .footer {
-            background: #003087;
-            color: white;
-            padding: 40px 0 20px;
-            margin-top: 60px;
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .ticket-panel, .payment-section {
+                padding: 25px;
+            }
+            
+            .amount {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .logo img {
+                height: 60px;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.5rem;
+            }
+            
+            .hero {
+                padding: 40px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-menu {
+                justify-content: center;
+                gap: 5px;
+            }
+            
+            .nav-menu li {
+                padding: 14px 12px;
+                font-size: 0.95rem;
+            }
+            
+            input, select {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            
+            .pay-button {
+                padding: 20px;
+                font-size: 1.25rem;
+            }
+            
+            .ticket-panel, .payment-section {
+                padding: 25px 20px;
+            }
+        }
+
+        /* Extra iOS touch improvements */
+        @media (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2) {
+            input, select, button {
+                -webkit-appearance: none;
+                border-radius: 10px;
+            }
         }
     </style>
 </head>
@@ -226,7 +268,7 @@
     <header>
         <div class="container header-content">
             <div class="logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Escudo_de_Jalisco.svg/800px-Escudo_de_Jalisco.svg.png" alt="Escudo Jalisco" style="height: 85px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Escudo_de_Jalisco.svg/800px-Escudo_de_Jalisco.svg.png" alt="Escudo Jalisco">
                 <div class="logo-text">
                     <h1>Secretaría de Transporte</h1>
                     <p>Gobierno del Estado de Jalisco</p>
@@ -308,12 +350,8 @@
             <h3 style="margin-bottom: 15px;">Método de Pago</h3>
             
             <div class="card-options">
-                <div class="card-btn active" onclick="selectCard(this)" id="credit-btn">
-                    💳 Tarjeta de Crédito
-                </div>
-                <div class="card-btn" onclick="selectCard(this)" id="debit-btn">
-                    💳 Tarjeta de Débito
-                </div>
+                <div class="card-btn active" onclick="selectCard(this)" id="credit-btn">💳 Tarjeta de Crédito</div>
+                <div class="card-btn" onclick="selectCard(this)" id="debit-btn">💳 Tarjeta de Débito</div>
             </div>
             
             <div class="form-group">
